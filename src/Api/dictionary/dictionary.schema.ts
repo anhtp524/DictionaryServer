@@ -12,7 +12,7 @@ export class Dictionary {
     translatedWord: string;
 
     @Prop({ type: String, length: 1000 })
-    descriptiob: string;
+    description: string;
 }
 
 export const DictionarySchema = SchemaFactory.createForClass(Dictionary);
