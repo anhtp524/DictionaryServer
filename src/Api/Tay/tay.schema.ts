@@ -7,6 +7,9 @@ export type TayDocument = Tay & Document;
 export class Tay {
     @Prop()
     word: string
+
+    @Prop()
+    description: string
 }
 
 export const TaySchema = SchemaFactory.createForClass(Tay);

@@ -23,19 +23,33 @@ export class viTayRepository extends Repository<viTayDocument> {
     // }
 
     async getVietToTay(wordSearch: string) {
-        const vitays = await this.viTayModel
+        const tayWords = await this.viTayModel
             .find({})
             .populate({
                 path: 'idVi',
-                match: {
-                    word: wordSearch,
-                },
-                select: 'word',
+                match: { word: wordSearch },
             })
             .populate('idTay')
             .exec();
-        return vitays.filter((vitay) => {
+        return tayWords.filter((vitay) => {
             return vitay.idVi;
+        });
+    }
+
+    async getTaytoViet(wordSearch: string) {
+        const condition = new RegExp(',?' + wordSearch + ',?', 'i')
+        console.log(condition.test('pỏ, pá'));
+        
+        const vietWords = await this.viTayModel
+            .find({})
+            .populate({
+                path: 'idTay',
+                match: { word: condition },
+            })
+            .populate('idVi')
+            .exec();
+        return vietWords.filter((vitay) => {
+            return vitay.idTay;
         });
     }
 }
