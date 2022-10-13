@@ -5,15 +5,15 @@ import { viTayService } from './viTay.service';
 export class VietTayController {
     constructor(private readonly viTayService: viTayService) {}
 
-    // @Get()
+    // @Get('add')
     // async create() {
-    //     await this.viTayService.create()
-    //     return "test"
+    //     await this.viTayService.create();
+    //     console.log('cho trung anh');
+    //     return 'test';
     // }
 
     @Get()
-    async getVietToTay(@Query() {query}: {query: string}) {
-        return this.viTayService.getVietToTay(query)
+    getVietToTay(@Query() { query }: { query: string }) {
+        return this.viTayService.getVietToTay(query);
     }
-
 }
