@@ -5,22 +5,14 @@ import { viTayService } from './viTay.service';
 export class VietTayController {
     constructor(private readonly viTayService: viTayService) {}
 
-    // @Get('add')
-    // async create() {
-    //     await this.viTayService.create();
-    //     //console.log('cho trung anh');
-    //     return 'test';
+    @Get('add')
+    async create() {
+        await this.viTayService.create();
+        return 'test';
+    }
+
+    // @Get('tay')
+    // translateTayToViet(@Query() { query }: { query: string }) {
+    //     return this.viTayService.getTayToViet(query);
     // }
-
-    @Get('viet')
-    translateVietToTay(@Query() { query }: { query: string }) {
-        return this.viTayService.translateSequenceText(query);
-        // return "test";
-        //return this.viTayService.getVietToTay(query);
-    }
-
-    @Get('tay')
-    translateTayToViet(@Query() { query }: { query: string }) {
-        return this.viTayService.getTayToViet(query);
-    }
 }

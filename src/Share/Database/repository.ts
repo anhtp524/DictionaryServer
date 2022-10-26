@@ -4,11 +4,10 @@ export class Repository<T extends Document> {
     constructor(private model: Model<T>) {}
 
     async create(item: T) {
-        try{
-            return this.model.create(item)
-        }
-        catch(error) {
-            Promise.reject(error)
+        try {
+            return this.model.create(item);
+        } catch (error) {
+            Promise.reject(error);
         }
     }
 
@@ -20,7 +19,11 @@ export class Repository<T extends Document> {
         return this.model.find(condition);
     }
 
+    delete(id: string) {
+        return this.model.deleteOne({ _id: id });
+    }
+
     test() {
-        return this.model.find()
+        return this.model.find();
     }
 }

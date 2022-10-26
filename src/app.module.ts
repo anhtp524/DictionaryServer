@@ -7,12 +7,11 @@ import { VietModule } from './Api/Viet/viet.module';
 
 @Module({
     imports: [
-        MongooseModule.forRoot('mongodb://localhost:27017/dictionary'),
+        MongooseModule.forRoot('mongodb://127.0.0.1:27017/dictionary'),
         DictionaryModule,
         VietModule,
         TayModule,
-        VietTayModule
+        VietTayModule,
     ],
-    
 })
 export class AppModule {}
