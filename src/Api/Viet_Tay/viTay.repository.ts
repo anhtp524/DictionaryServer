@@ -28,8 +28,9 @@ export class viTayRepository extends Repository<viTayDocument> {
             .populate({
                 path: 'idVi',
                 match: { word: wordSearch },
+                select: "word"
             })
-            .populate('idTay')
+            .populate('idTay',"word")
             .exec();
         return tayWords.filter((vitay) => {
             return vitay.idVi;
@@ -37,7 +38,7 @@ export class viTayRepository extends Repository<viTayDocument> {
     }
 
     async getTaytoViet(wordSearch: string) {
-        const condition = new RegExp(',?' + wordSearch + ',?', 'i')
+        const condition = new RegExp('^' + wordSearch + ',?' , 'i')
         console.log(condition.test('pỏ, pá'));
         
         const vietWords = await this.viTayModel
