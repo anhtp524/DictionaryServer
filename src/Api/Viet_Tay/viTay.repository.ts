@@ -10,18 +10,6 @@ export class viTayRepository extends Repository<viTayDocument> {
         super(viTayModel);
     }
 
-    // getVietToTay(wordSearch: string) {
-    //     return this.viTayModel
-    //         .find({}, 'idVi')
-    //         .populate({
-    //             path: 'idVi',
-    //             match: { word: wordSearch },
-    //             select: 'word',
-    //         })
-    //         .populate('idTay', 'word')
-    //         .exec();
-    // }
-
     async getVietToTay(wordSearch: string) {
         const tayWords = await this.viTayModel
             .find({})
@@ -30,27 +18,24 @@ export class viTayRepository extends Repository<viTayDocument> {
                 match: { word: wordSearch },
                 select: "word"
             })
-            .populate('idTay',"word")
+            .populate('idTay')
             .exec();
-        return tayWords.filter((vitay) => {
-            return vitay.idVi;
+        return tayWords.filter((tayWord) => {
+            return tayWord.idVi;
         });
     }
 
     async getTaytoViet(wordSearch: string) {
-        const condition = new RegExp('^' + wordSearch + ',?' , 'i')
-        console.log(condition.test('pỏ, pá'));
-        
         const vietWords = await this.viTayModel
             .find({})
             .populate({
                 path: 'idTay',
-                match: { word: condition },
+                match: { word: wordSearch },
             })
             .populate('idVi')
             .exec();
-        return vietWords.filter((vitay) => {
-            return vitay.idTay;
+        return vietWords.filter((vietWord) => {
+            return vietWord.idTay;
         });
     }
 }

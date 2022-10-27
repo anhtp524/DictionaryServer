@@ -9,36 +9,36 @@ import { viTayDocument } from './viTay.schema';
 export class viTayService {
     constructor(
         private readonly viTayRepo: viTayRepository,
-        private vietRepo: VietRepository,
-        private tayRepo: TayRepository,
+        // private vietRepo: VietRepository,
+        // private tayRepo: TayRepository,
     ) {}
 
-    async create() {
-        const dataVi = await this.vietRepo.test();
-        const dataTay = await this.tayRepo.test();
-        // eslint-disable-next-line prefer-const
-        let idViTest: any = '';
-        // eslint-disable-next-line prefer-const
-        let wordVi: string = '';
-        await dataVi.forEach(async (value, index) => {
-            if (value.word === wordVi) {
-                const obj = {
-                    idVi: idViTest,
-                    idTay: dataTay[index]._id,
-                };
-                await this.viTayRepo.create(<viTayDocument>obj);
-                await this.vietRepo.delete(value._id);
-            } else {
-                const obj = {
-                    idVi: value._id,
-                    idTay: dataTay[index]._id,
-                };
-                idViTest = value._id;
-                wordVi = value.word;
-                this.viTayRepo.create(<viTayDocument>obj);
-            }
-        });
-    }
+    // async create() {
+    //     const dataVi = await this.vietRepo.test();
+    //     const dataTay = await this.tayRepo.test();
+    //     // eslint-disable-next-line prefer-const
+    //     let idViTest: any = '';
+    //     // eslint-disable-next-line prefer-const
+    //     let wordVi: string = '';
+    //     await dataVi.forEach(async (value, index) => {
+    //         if (value.word === wordVi) {
+    //             const obj = {
+    //                 idVi: idViTest,
+    //                 idTay: dataTay[index]._id,
+    //             };
+    //             await this.viTayRepo.create(<viTayDocument>obj);
+    //             await this.vietRepo.delete(value._id);
+    //         } else {
+    //             const obj = {
+    //                 idVi: value._id,
+    //                 idTay: dataTay[index]._id,
+    //             };
+    //             idViTest = value._id;
+    //             wordVi = value.word;
+    //             this.viTayRepo.create(<viTayDocument>obj);
+    //         }
+    //     });
+    // }
 
     getVietToTay(word: string) {
         return this.viTayRepo.getVietToTay(word);
