@@ -13,7 +13,8 @@ export class VietTayController {
 
     @Get('viet')
     translateVietToTay(@Query() { query }: { query: string }) {
-        return this.viTayService.getVietToTay(query);
+        // return this.viTayService.getVietToTay(query);
+        return this.viTayService.translateSequenceText(query);
     }
 
     @Get('tay')

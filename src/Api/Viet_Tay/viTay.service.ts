@@ -48,32 +48,36 @@ export class viTayService {
         return this.viTayRepo.getTaytoViet(word);
     }
 
-    // async translateSequenceText(text: string) {
-    //     const arrWord = text.split(' ');
+    async translateSequenceText(text: string) {
+        const arrWord = text.split(' ');
+        console.log(arrWord);
+        
+        const test: any[] = [];
+        let s: string = '';
+        for (const value of arrWord) {
+            const result = await this.viTayRepo.getVietToTay(value);
 
-    //     const test: any[] = [];
-    //     let s: string = '';
-    //     for (const value of arrWord) {
-    //         console.log(value);
+            test.push(result);
+        }
+        let result = []
+        this.backTrackingAlgorithm(test, arrWord.length, 0, 0, [], result)
+        return result
 
-    //         const result = await this.viTayRepo.getVietToTay(value);
-    //         console.log(result);
+        //return test
+        
+    }
 
-    //         //console.log(result);
-    //         const word = result[0].toJSON().idTay.word;
-    //         s += word + ' ';
-
-    //         //console.log(result.toJSON().idTay.word);
-    //         //const test2 = result[0].idTay.word
-    //         test.push(result);
-    //     }
-
-    //     // const test =  arrWord.map(function cb(value, index) {
-    //     //     console.log(value);
-    //     //     const result = this.viTayRepo.getVietToTay(value)
-    //     //     return result
-    //     // })
-
-    //     return s;
-    // }
+    backTrackingAlgorithm(arr: any[], l: number, i: number, j: number, x: any[], result: any[]) {
+        
+        for (const value of arr[j]) { 
+            x[i] = value.idTay.word
+            if (i === l - 1){
+                console.log(x);
+                result.push(x.toString())
+            }
+            else {
+                this.backTrackingAlgorithm(arr, l, i + 1, j + 1, x, result)
+            }
+        }
+    }
 }
