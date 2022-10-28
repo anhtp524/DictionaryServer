@@ -12,8 +12,12 @@ export class VietTayController {
     // }
 
     @Get('viet')
-    translateVietToTay(@Query() { query }: { query: string }) {
-        // return this.viTayService.getVietToTay(query);
+    async translateVietToTay(@Query() { query }: { query: string }) {
+        const translateWord = await this.viTayService.getVietToTay(query);
+        if(translateWord.length !== 0){
+            return translateWord;
+        }
+        
         return this.viTayService.translateSequenceText(query);
     }
 

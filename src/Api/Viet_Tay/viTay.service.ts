@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { Injectable } from '@nestjs/common';
 import { TayRepository } from '../Tay/tay.repository';
 import { VietRepository } from '../Viet/viet.repository';
@@ -50,8 +49,6 @@ export class viTayService {
 
     async translateSequenceText(text: string) {
         const arrWord = text.split(' ');
-        console.log(arrWord);
-        
         const test: any[] = [];
         let s: string = '';
         for (const value of arrWord) {
@@ -61,22 +58,21 @@ export class viTayService {
         }
         let result = []
         this.backTrackingAlgorithm(test, arrWord.length, 0, 0, [], result)
-        return result
-
-        //return test
+        return {
+            listSequenceText: result
+        }
         
     }
 
-    backTrackingAlgorithm(arr: any[], l: number, i: number, j: number, x: any[], result: any[]) {
+    backTrackingAlgorithm(arr: any[], l: number, indexArrWord: number, j: number, x: any[], result: any[]) {
         
         for (const value of arr[j]) { 
-            x[i] = value.idTay.word
-            if (i === l - 1){
-                console.log(x);
-                result.push(x.toString())
+            x[indexArrWord] = value.idTay.word
+            if (indexArrWord === l - 1){               
+                result.push(x.join(" "))
             }
             else {
-                this.backTrackingAlgorithm(arr, l, i + 1, j + 1, x, result)
+                this.backTrackingAlgorithm(arr, l, indexArrWord + 1, j + 1, x, result)
             }
         }
     }
