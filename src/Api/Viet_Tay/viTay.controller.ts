@@ -18,11 +18,16 @@ export class VietTayController {
             return translateWord;
         }
         
-        return this.viTayService.translateSequenceText(query);
+        return this.viTayService.translateSequenceTextVietnamToTay(query);
     }
 
     @Get('tay')
-    translateTayToViet(@Query() { query }: { query: string }) {
-        return this.viTayService.getTayToViet(query);
+    async translateTayToViet(@Query() { query }: { query: string }) {
+        const translateWord = await this.viTayService.getTayToViet(query);
+        if(translateWord.length !== 0){
+            return translateWord;
+        }
+        
+        return this.viTayService.translateSequenceTextTayToVietnam(query);
     }
 }

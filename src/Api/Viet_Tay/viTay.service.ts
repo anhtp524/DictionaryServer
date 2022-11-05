@@ -47,10 +47,9 @@ export class viTayService {
         return this.viTayRepo.getTaytoViet(word);
     }
 
-    async translateSequenceText(text: string) {
+    async translateSequenceTextVietnamToTay(text: string) {
         const arrWord = text.split(' ');
         const test: any[] = [];
-        let s: string = '';
         for (const value of arrWord) {
             const result = await this.viTayRepo.getVietToTay(value);
 
@@ -64,8 +63,22 @@ export class viTayService {
         
     }
 
+    async translateSequenceTextTayToVietnam(text: string) {
+        const arrWord = text.split(' ');
+        const test: any[] = [];
+        for (const value of arrWord) {
+            const result = await this.viTayRepo.getTaytoViet(value);
+
+            test.push(result);
+        }
+        let result = []
+        this.backTrackingAlgorithm(test, arrWord.length, 0, 0, [], result)
+        return {
+            listSequenceText: result
+        }
+    }
+
     backTrackingAlgorithm(arr: any[], l: number, indexArrWord: number, j: number, x: any[], result: any[]) {
-        
         for (const value of arr[j]) { 
             x[indexArrWord] = value.idTay.word
             if (indexArrWord === l - 1){               
