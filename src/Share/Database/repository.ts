@@ -19,11 +19,18 @@ export class Repository<T extends Document> {
         return this.model.find(condition);
     }
 
+    updateById(id: string, item: any) {
+        return this.model.findByIdAndUpdate({_id: id}, {$set: item})
+    }
+
     delete(id: string) {
         return this.model.deleteOne({ _id: id });
     }
 
-    test() {
-        return this.model.find();
-    }
+
+    // test() {
+    //     return this.model.find();
+    // }
+
+
 }
