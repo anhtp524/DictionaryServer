@@ -4,6 +4,7 @@ import { TayModule } from './Api/Tay/tay.module';
 import { VietTayModule } from './Api/Viet_Tay/viTay.module';
 import { VietModule } from './Api/Viet/viet.module';
 import { SequenceModule } from './Api/SequenceText/sequence.module';
+import { CrawlerModule } from './Api/craw-data/craw-data.module';
 
 @Module({
     imports: [
@@ -11,7 +12,10 @@ import { SequenceModule } from './Api/SequenceText/sequence.module';
         VietModule,
         TayModule,
         VietTayModule,
-        SequenceModule
+        SequenceModule,
+        CrawlerModule,
     ],
+    providers: [],
+    controllers: [],
 })
 export class AppModule {}

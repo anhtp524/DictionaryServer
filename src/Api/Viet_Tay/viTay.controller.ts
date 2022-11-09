@@ -14,20 +14,20 @@ export class VietTayController {
     @Get('viet')
     async translateVietToTay(@Query() { query }: { query: string }) {
         const translateWord = await this.viTayService.getVietToTay(query);
-        if(translateWord.length !== 0){
+        if (translateWord.length !== 0) {
             return translateWord;
         }
-        
+
         return this.viTayService.translateSequenceTextVietnamToTay(query);
     }
 
     @Get('tay')
     async translateTayToViet(@Query() { query }: { query: string }) {
         const translateWord = await this.viTayService.getTayToViet(query);
-        if(translateWord.length !== 0){
+        if (translateWord.length !== 0) {
             return translateWord;
         }
-        
+
         return this.viTayService.translateSequenceTextTayToVietnam(query);
     }
 }

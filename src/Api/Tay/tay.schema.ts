@@ -6,10 +6,10 @@ export type TayDocument = Tay & Document;
 @Schema()
 export class Tay {
     @Prop()
-    word: string
+    word: string;
 
     @Prop()
-    description: string
+    description: string;
 }
 
 export const TaySchema = SchemaFactory.createForClass(Tay);

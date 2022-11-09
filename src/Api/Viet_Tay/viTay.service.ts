@@ -6,11 +6,9 @@ import { viTayDocument } from './viTay.schema';
 
 @Injectable()
 export class viTayService {
-    constructor(
-        private readonly viTayRepo: viTayRepository,
-        // private vietRepo: VietRepository,
-        // private tayRepo: TayRepository,
-    ) {}
+    constructor(private readonly viTayRepo: viTayRepository) // private vietRepo: VietRepository,
+    // private tayRepo: TayRepository,
+    {}
 
     // async create() {
     //     const dataVi = await this.vietRepo.test();
@@ -55,12 +53,11 @@ export class viTayService {
 
             test.push(result);
         }
-        let result = []
-        this.backTrackingAlgorithm(test, arrWord.length, 0, 0, [], result)
+        let result = [];
+        this.backTrackingAlgorithm(test, arrWord.length, 0, 0, [], result);
         return {
-            listSequenceText: result
-        }
-        
+            listSequenceText: result,
+        };
     }
 
     async translateSequenceTextTayToVietnam(text: string) {
@@ -71,21 +68,20 @@ export class viTayService {
 
             test.push(result);
         }
-        let result = []
-        this.backTrackingAlgorithm(test, arrWord.length, 0, 0, [], result)
+        let result = [];
+        this.backTrackingAlgorithm(test, arrWord.length, 0, 0, [], result);
         return {
-            listSequenceText: result
-        }
+            listSequenceText: result,
+        };
     }
 
     backTrackingAlgorithm(arr: any[], l: number, indexArrWord: number, j: number, x: any[], result: any[]) {
-        for (const value of arr[j]) { 
-            x[indexArrWord] = value.idTay.word
-            if (indexArrWord === l - 1){               
-                result.push(x.join(" "))
-            }
-            else {
-                this.backTrackingAlgorithm(arr, l, indexArrWord + 1, j + 1, x, result)
+        for (const value of arr[j]) {
+            x[indexArrWord] = value.idTay.word;
+            if (indexArrWord === l - 1) {
+                result.push(x.join(' '));
+            } else {
+                this.backTrackingAlgorithm(arr, l, indexArrWord + 1, j + 1, x, result);
             }
         }
     }
