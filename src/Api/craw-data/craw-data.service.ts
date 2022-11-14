@@ -7,29 +7,39 @@ export class CrawlerService {
     constructor(private readonly crawler: NestCrawlerService) {}
 
     // scraping the specific page
-    public async scrape(): Promise<void> {
+    public async scrape(): Promise<string[]> {
+
         interface ExampleCom {
             info: string;
         }
 
         const data: ExampleCom = await this.crawler.fetch({
-            target: 'https://www.geeksforgeeks.org/nodejs-web-crawling-using-cheerio/',
+            target: 'https://vov4.vov.vn/taynung/phan-tin-va-bai-fiet-tin-tuc-su-kien/pi-noong-du-ban-con-pao-chuc-dong-may-chang-nam-kem-379253.vov4',
             fetch: {
                 info: {
-                    selector: '.text > p',
+                    selector: '.text-long > p',
                     // texteq: 0,
                 },
             },
         });
+        // Gộp nhiều dấu space thành 1 space
+        data.info = data.info.replace(/\s+/g, ' ');
+        // loại bỏ toàn bộ dấu space (nếu có) ở 2 đầu của xâu
+        data.info.trim();
 
-        console.log(data);
-        fs.writeFile('data.txt', data.info, function (err) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log('success');
-            }
-        });
+        data.info = data.info.replace(/\"|“|”|.\//g, '')
+
+        const arr_data: string[] = data.info.split('. ')
+        //
+        console.log(arr_data);
+        
+        return arr_data
+
+        // fs.writeFile('data.txt', data.info, function (err) {
+        //     if (err) {
+        //        throw (err);
+        //     }
+        // });
         // {
         //   title: 'Example Domain',
         //   info: 'http://www.iana.org/domains/example',

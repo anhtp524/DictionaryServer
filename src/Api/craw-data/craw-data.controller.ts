@@ -7,7 +7,7 @@ export class CrawlerController {
 
     @Get('add')
     async create() {
-        await this.crawDataService.scrape();
-        return 'test';
+        
+        return await this.crawDataService.scrape();
     }
 }

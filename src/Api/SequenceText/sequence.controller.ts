@@ -5,6 +5,11 @@ import { SequenceService } from './sequence.service';
 export class SequenceController {
     constructor(private readonly sequenceService: SequenceService) {}
 
+    @Get('add')
+    addData() {
+        this.sequenceService.create()
+        return "test"
+    }
 
     @Get('')
     getVietNamSequece() {
