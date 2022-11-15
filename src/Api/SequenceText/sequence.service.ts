@@ -22,11 +22,12 @@ export class SequenceService {
         
     }
 
-    async getVietNamSequence() {
+    async getTaySequence() {
         return await this.sequenceRepo.getAllByCondition({})
     }
 
-    async updateTaySequence(id: string, stringTay: any) {
-        return await this.sequenceRepo.updateById(id, stringTay )
+    async updateVietSequence(id: string, stringViet: any) {
+        await this.sequenceRepo.updateById(id, { stringVietNam: stringViet} ) 
+        return await this.sequenceRepo.updateById(id, {stringVietNam: stringViet} )
     }
 }

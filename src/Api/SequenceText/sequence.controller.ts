@@ -12,13 +12,13 @@ export class SequenceController {
     }
 
     @Get('')
-    getVietNamSequece() {
-        return this.sequenceService.getVietNamSequence()
+    getTaySequece() {
+        return this.sequenceService.getTaySequence()
     }
 
     @Patch('/:id')
-    updateTaySequence(@Param('id') id: string, @Body() stringTay: {stringTay: string}) {
-        return this.sequenceService.updateTaySequence(id, stringTay)
+    updateVietSequence(@Param('id') id: string, @Body() {stringViet}: {stringViet: string}) {
+        return this.sequenceService.updateVietSequence(id, stringViet)
     }
 
 }
