@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+
 import { Document, Model } from 'mongoose';
 export class Repository<T extends Document> {
     constructor(private model: Model<T>) {}
