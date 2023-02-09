@@ -8,6 +8,7 @@ import { CrawlerModule } from './Api/craw-data/craw-data.module';
 import { UsersModule } from './Api/users/users.module';
 import { AuthModule } from './Api/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { UserWordModule } from './Api/user-word/user-word.module';
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import { ConfigModule } from '@nestjs/config';
         CrawlerModule,
         UsersModule,
         AuthModule,
+        UserWordModule,
     ],
     providers: [],
     controllers: [],

@@ -6,8 +6,7 @@ import { viTayDocument } from './viTay.schema';
 
 @Injectable()
 export class viTayService {
-    constructor(private readonly viTayRepo: viTayRepository) // private vietRepo: VietRepository,
-    // private tayRepo: TayRepository,
+    constructor(private readonly viTayRepo: viTayRepository , private vietRepo: VietRepository, private tayRepo: TayRepository)
     {}
 
     // async create() {

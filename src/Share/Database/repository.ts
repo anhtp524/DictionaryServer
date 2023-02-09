@@ -28,9 +28,9 @@ export class Repository<T extends Document> {
     }
 
 
-    // test() {
-    //     return this.model.find();
-    // }
+    test() {
+        return this.model.find();
+    }
 
 
 }

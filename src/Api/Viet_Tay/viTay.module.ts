@@ -11,5 +11,6 @@ import { viTayService } from './viTay.service';
     imports: [MongooseModule.forFeature([{ name: Viet_Tay.name, schema: viTaySchema }]), VietModule, TayModule],
     controllers: [VietTayController],
     providers: [viTayService, viTayRepository],
+    exports:[viTayRepository]
 })
 export class VietTayModule {}
