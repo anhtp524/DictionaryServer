@@ -16,11 +16,27 @@ export class Repository<T extends Document> {
     }
 
     getAllByCondition(condition: any) {
-        return this.model.find(condition);
+        return this.model.find(condition).exec();
+    }
+
+    async getAll(limit: number = 5 , page: number = 1, search: string = "") {
+        const condition = new RegExp('.*' + search + '.*', 'i')
+        const totalDocs = await this.model.countDocuments({name: condition})
+        const totalPage = Math.ceil(totalDocs / limit)
+        page > totalPage ? (page = totalPage) : page
+        const docsView = await this.model  
+                                    .find({name: condition, $isDeleted : false})
+                                    .skip((page - 1) * limit) 
+                                    .limit(limit)
+        return {
+                currentPage: page,
+                totalPage: totalPage,
+                data: docsView
+            }
     }
 
     updateById(id: string, item: any) {
-        return this.model.findByIdAndUpdate({_id: id}, {$set: item})
+        return this.model.findByIdAndUpdate({_id: id}, {$set: item}).exec()
     }
 
     delete(id: string) {
