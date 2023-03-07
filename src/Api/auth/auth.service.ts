@@ -75,5 +75,11 @@ export class AuthService {
         
     }
 
+    async logout(userId: string) {
+        await this.cacheService.del(`users:${userId}:accessToken`);
+        await this.cacheService.del(`users:${userId}:refreshToken`);
+        return new HttpException('You are logging out' , 200)
+    }
+
     
 }

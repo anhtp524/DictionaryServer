@@ -23,4 +23,13 @@ export class UserWordService {
         }
         return await this.userWordRepo.create(<UserWordDocument>{'idUser': idUser,'idWord': idWord});
     }
+
+    async deleteUserWord(userId: string, wordId: string){
+        const userWord = await this.userWordRepo.getOneByCondition({ 'idUser': userId, 'idWord': wordId })
+        if (!userWord) {
+            throw new HttpException('Not found this word in user', 400);
+        }
+        await this.userWordRepo.delete(userWord.id);
+        throw new HttpException('Unlike word success', 200)
+    }
 }

@@ -1,4 +1,8 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Request } from '@nestjs/common/decorators';
+import { Role } from 'src/Share/enum/enum';
+import { Roles } from 'src/Share/guard/roles.decorator';
+import { RolesGuard } from 'src/Share/guard/roles.guard';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './dto/auth.dto';
 
@@ -19,6 +23,18 @@ export class AuthController {
     async login(@Body() info: LoginDto){
         try{
             return await this.authService.login(info);
+        }catch(err){
+            return err;
+        }
+    }
+
+
+    @Post('logout')
+    @Roles(Role.user)
+    @UseGuards(RolesGuard) 
+    async logout(@Request() req){
+        try{
+            return await this.authService.logout(req.userId);
         }catch(err){
             return err;
         }
