@@ -12,7 +12,7 @@ import { UserWordModule } from './Api/user-word/user-word.module';
 
 @Module({
     imports: [
-        MongooseModule.forRoot('mongodb://127.0.0.1:27017/dictionary'),
+        MongooseModule.forRoot('mongodb+srv://hieu:EBeysKEvqLfQ3W5a@hieu.iz4kxp7.mongodb.net/test?retryWrites=true&w=majority'),
         ConfigModule.forRoot({
             isGlobal: true,
             envFilePath: '.env',

@@ -1,15 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { HttpException } from '@nestjs/common/exceptions';
-import mongoose, { ObjectId } from 'mongoose';
+import mongoose, { AnyArray, ObjectId } from 'mongoose';
+import { Tay } from '../Tay/tay.schema';
 import { UserRepository } from '../users/users.repository';
+import { Viet } from '../Viet/viet.schema';
 import { viTayRepository } from '../Viet_Tay/viTay.repository';
+import { Viet_Tay } from '../Viet_Tay/viTay.schema';
 import { userWordRepository } from './user-word.repository';
 import { UserWord, UserWordDocument } from './user-word.schema';
 
 @Injectable()
 export class UserWordService {
     constructor(private readonly userWordRepo: userWordRepository, private readonly userRepo: UserRepository, private readonly viTayRepo: viTayRepository) { }
-    
+
     async addWord(userId: string, wordId: string) {
         const idUser = new mongoose.Types.ObjectId(userId);
         const idWord = new mongoose.Types.ObjectId(wordId)
@@ -31,5 +34,13 @@ export class UserWordService {
         }
         await this.userWordRepo.delete(userWord.id);
         throw new HttpException('Unlike word success', 200)
+    }
+
+    async getUserWord(userId: string){
+        const userWords = await this.userWordRepo.getUserWord(userId)
+        if (userWords.length === 0) {
+            throw new HttpException('This user do not note any word' , 400)
+        }
+        return userWords
     }
 }

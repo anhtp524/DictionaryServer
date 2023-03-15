@@ -1,7 +1,7 @@
 
 import { Document, Model } from 'mongoose';
 export class Repository<T extends Document> {
-    constructor(private model: Model<T>) {}
+    constructor(private model: Model<T>) { }
 
     async create(item: T) {
         try {

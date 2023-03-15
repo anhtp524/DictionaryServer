@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards, Request, Param, Delete } from '@nestjs/common';
+import { Controller, Post, UseGuards, Request, Param, Delete, Get } from '@nestjs/common';
 import { Role } from 'src/Share/enum/enum';
 import { Roles } from 'src/Share/guard/roles.decorator';
 import { RolesGuard } from 'src/Share/guard/roles.guard';
@@ -25,6 +25,17 @@ export class UserWordController {
     async deleteUserWord(@Request() req, @Param('wordId') wordId: string) {
         try {
             return await this.userWordService.deleteUserWord(req.userId , wordId)
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    @Get('')
+    @Roles(Role.user)
+    @UseGuards(RolesGuard) 
+    async getUserWord(@Request() req) {
+        try {
+            return await this.userWordService.getUserWord(req.userId)
         } catch (err) {
             throw err;
         }

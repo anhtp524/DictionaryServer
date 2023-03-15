@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Viet_Tay, viTayDocument } from './viTay.schema';
+import { Viet } from '../Viet/viet.schema';
+import { Tay } from '../Tay/tay.schema';
 
 @Injectable()
 export class viTayRepository extends Repository<viTayDocument> {
@@ -11,18 +13,38 @@ export class viTayRepository extends Repository<viTayDocument> {
     }
 
     async getVietToTay(wordSearch: string) {
-        const tayWords = await this.viTayModel
-            .find({})
-            .populate({
-                path: 'idVi',
-                match: { word: wordSearch },
-                select: "word"
-            })
-            .populate('idTay')
-            .exec();
-        return tayWords.filter((tayWord) => {
-            return tayWord.idVi;
-        });
+        try {
+            const tayWords = await this.viTayModel
+                .find()
+                .lean()
+                .populate({
+                    path: 'idVi',
+                    match: { word: wordSearch },
+                })
+                .populate({
+                    path: 'idTay',
+                })
+                .exec(); 
+            const word = tayWords.filter((tayWord) => {
+                return tayWord.idVi
+            }); 
+            return word;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    async getAllVietTay() {
+        return await this.viTayModel
+                .find()
+                .lean()
+                .populate({
+                    path: 'idVi',
+                })
+                .populate({
+                    path: 'idTay',
+                })
+                .exec(); 
     }
 
     async getTaytoViet(wordSearch: string) {
