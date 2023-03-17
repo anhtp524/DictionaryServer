@@ -12,23 +12,40 @@ export class viTayRepository extends Repository<viTayDocument> {
         super(viTayModel);
     }
 
-    async getVietToTay(wordSearch: string) {
+    async translate(wordSearch: string, language: string) {
         try {
-            const tayWords = await this.viTayModel
-                .find()
-                .lean()
-                .populate({
-                    path: 'idVi',
-                    match: { word: wordSearch },
-                })
-                .populate({
-                    path: 'idTay',
-                })
-                .exec(); 
-            const word = tayWords.filter((tayWord) => {
-                return tayWord.idVi
-            }); 
-            return word;
+            if (language === 'viet') {
+                const tayWords = await this.viTayModel
+                    .find()
+                    .lean()
+                    .populate({
+                        path: 'idVi',
+                        match: { word: wordSearch },
+                    })
+                    .populate({
+                        path: 'idTay',
+                    })
+                    .exec(); 
+                const word = tayWords.filter((tayWord) => {
+                    return tayWord.idVi
+                }); 
+                return word;              
+            }
+            const vietWords = await this.viTayModel
+                    .find()
+                    .lean()
+                    .populate({
+                        path: 'idTay',
+                        match: { word: wordSearch },
+                    })
+                    .populate({
+                        path: 'idVi',
+                    })
+                    .exec(); 
+                const word = vietWords.filter((vietWord) => {
+                    return vietWord.idTay
+                }); 
+            return word; 
         } catch (err) {
             throw err;
         }

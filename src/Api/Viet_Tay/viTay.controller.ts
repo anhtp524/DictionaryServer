@@ -23,47 +23,61 @@ export class VietTayController {
         }
     }
 
-    @Get('ESsearch/viet')
+    @Get('viet/ESsearch')
     async translateVietToTayByElasticSearch(@Query() query) {
         try {
-            return await this.viTayService.getVietToTayByElasticSearch(query.word);
+            return await this.viTayService.translateByElasticSearch(query.word, 'viet');
             
-        } catch (err) {
-            console.log(err);
-            
+        } catch (err) {    
             throw err;
         }
-        // if (translateWord.length !== 0) {
-        //     return translateWord;
-        // }
+    }
 
-        // return this.viTayService.translateSequenceTextVietnamToTay(query);
+    @Get('tay/ESsearch')
+    async translateTayToVietByElasticSearch(@Query() query) {
+        try {
+            return await this.viTayService.translateByElasticSearch(query.word, 'tay');
+            
+        } catch (err) {    
+            throw err;
+        }
+    }
+
+    @Get('viet/wordSuggestion')
+    async vietSuggestionWord(@Query() query) {
+        try {
+            return await this.viTayService.wordSuggeston(query.word, 'viet');
+            
+        } catch (err) {   
+            throw err;
+        }
+    }
+
+    @Get('tay/wordSuggestion')
+    async taySuggestionWord(@Query() query) {
+        try {
+            return await this.viTayService.wordSuggeston(query.word, 'tay');
+            
+        } catch (err) {   
+            throw err;
+        }
     }
 
     @Get('viet')
     async translateVietToTay(@Query() query) {
         try {
-            return await this.viTayService.getVietToTay(query.word);
-            
-        } catch (err) {
-            console.log(err);
-            
+            return await this.viTayService.translate(query.word, 'viet');         
+        } catch (err) {     
             throw err;
         }
-        // if (translateWord.length !== 0) {
-        //     return translateWord;
-        // }
-
-        // return this.viTayService.translateSequenceTextVietnamToTay(query);
     }
 
     @Get('tay')
     async translateTayToViet(@Query() query) {
-        const translateWord = await this.viTayService.getTayToViet(query.word);
-        if (translateWord.length !== 0) {
-            return translateWord;
+        try {
+            return await this.viTayService.translate(query.word, 'tay');         
+        } catch (err) {     
+            throw err;
         }
-
-        return this.viTayService.translateSequenceTextTayToVietnam(query.word);
     }
 }

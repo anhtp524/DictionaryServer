@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HttpException } from '@nestjs/common/exceptions';
 import mongoose, { AnyArray, ObjectId } from 'mongoose';
+import { ElasticSearchService } from 'src/Share/elasticsearch/elasticsearch.service';
 import { Tay } from '../Tay/tay.schema';
 import { UserRepository } from '../users/users.repository';
 import { Viet } from '../Viet/viet.schema';
@@ -11,18 +12,18 @@ import { UserWord, UserWordDocument } from './user-word.schema';
 
 @Injectable()
 export class UserWordService {
-    constructor(private readonly userWordRepo: userWordRepository, private readonly userRepo: UserRepository, private readonly viTayRepo: viTayRepository) { }
+    constructor(private readonly userWordRepo: userWordRepository, private readonly userRepo: UserRepository, private readonly viTayRepo: viTayRepository, private readonly esService: ElasticSearchService) { }
 
-    async addWord(userId: string, wordId: string) {
+    async addWord(userId: string, viet: string, tay:string) {
         const idUser = new mongoose.Types.ObjectId(userId);
-        const idWord = new mongoose.Types.ObjectId(wordId)
+        const idWordString = await this.esService.getVietTayId(viet, tay);
+        if (!idWordString) {
+            throw new HttpException('Can not save this word', 400)
+        }
+        const idWord = new mongoose.Types.ObjectId(idWordString)
         const userWord = await this.userWordRepo.getOneByCondition({'idUser': idUser,'idWord': idWord})
         if (userWord) {
             throw new HttpException('This user has noted this word' , 400)
-        }
-        const word = await this.viTayRepo.getOneByCondition({ '_id': idWord })
-        if (!word) {
-            throw new HttpException('Not found this word', 404)
         }
         return await this.userWordRepo.create(<UserWordDocument>{'idUser': idUser,'idWord': idWord});
     }

@@ -13,8 +13,6 @@ export class UsersController {
     constructor(private readonly userService: UsersService){}
 
     @Patch('user/verify')
-    @Roles(Role.user)
-    @UseGuards(RolesGuard)
     async verifyUser(@Body() info:VerifyDto) {
         try{
             return this.userService.verifyUser(info.otp , info.email)

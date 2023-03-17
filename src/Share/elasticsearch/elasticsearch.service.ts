@@ -20,6 +20,15 @@ export class ElasticSearchService {
           body: {
             mappings: {
               properties: {
+                idVietTay: {
+                  type: 'text',
+                  fields: {
+                    keyword: {
+                      type: 'keyword',
+                      ignore_above: 256,
+                    },
+                  },
+                },
                 viet: {
                   type: 'text',
                   fields: {
@@ -80,18 +89,102 @@ export class ElasticSearchService {
     });
   }
  
-  async search(text: string) {
-    const search = await this.esService.search({
-      body: {
-        query: {
-          multi_match: {
-            query: text,
-            fields: ['viet']
+  async search(text: string, language: string) {
+    if (language === 'viet') {
+      const search = await this.esService.search({
+        body: {
+          query: {
+            "bool":
+              {
+                "must":
+                {
+                  "term":
+                  {
+                    "viet.keyword":
+                    {
+                      "value": text
+                    }
+                  }
+                }
+              }
+            },
           }
         }
+      )
+      const hits = search.hits.hits;
+      return hits.map((item) => (item._source as any).tay);     
+    }
+    const search = await this.esService.search({
+        body: {
+          query: {
+            "bool":
+              {
+                "must":
+                {
+                  "term":
+                  {
+                    "tay.keyword":
+                    {
+                      "value": text
+                    }
+                  }
+                }
+              }
+            },
+          }
+        }
+      )
+      const hits = search.hits.hits;
+      return hits.map((item) => (item._source as any).viet); 
+  }
+
+  async getVietTayId(viet: string,tay:string) {
+    const search = await this.esService.search({
+      body: {
+        query: 
+        {
+          "bool":
+            {
+            "must":
+              [
+                {"term":{"tay.keyword":{"value": tay}}},
+                {"term":{"viet.keyword":{"value": viet}}},
+              ]
+            }
+          }
+        },
       }
-    })
+    )
     const hits = search.hits.hits;
-    return hits.map((item) => item._source);
+    return (hits[0]._source as any).idVietTay; 
+  }
+
+  async WordSuggestion(text: string, language: string) {
+    if (language === 'viet') {
+      const search = await this.esService.search({
+        body: {
+          query: {
+            match: {
+              viet: text,
+            }
+          }
+          }
+        }
+      )
+      const hits = search.hits.hits;
+      return hits.map((item) => (item._source as any).viet );     
+    }
+    const search = await this.esService.search({
+        body: {
+          query: {
+            match: {
+              tay: text,
+            }
+          }
+          }
+        }
+      )
+      const hits = search.hits.hits;
+      return hits.map((item) => (item._source as any).tay );
   }
 }
