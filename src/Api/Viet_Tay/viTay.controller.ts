@@ -9,16 +9,15 @@ export class VietTayController {
     @Get('add')
     async create() {
         await this.viTayService.create();
-        return "test"
+        return 'test';
     }
 
     @Get('addDataES')
     async addDataElasticSearch() {
         try {
             return await this.viTayService.indexESData();
-            
         } catch (err) {
-            console.log(err);          
+            console.log(err);
             throw err;
         }
     }
@@ -27,8 +26,7 @@ export class VietTayController {
     async translateVietToTayByElasticSearch(@Query() query) {
         try {
             return await this.viTayService.translateByElasticSearch(query.word, 'viet');
-            
-        } catch (err) {    
+        } catch (err) {
             throw err;
         }
     }
@@ -37,8 +35,7 @@ export class VietTayController {
     async translateTayToVietByElasticSearch(@Query() query) {
         try {
             return await this.viTayService.translateByElasticSearch(query.word, 'tay');
-            
-        } catch (err) {    
+        } catch (err) {
             throw err;
         }
     }
@@ -47,8 +44,7 @@ export class VietTayController {
     async vietSuggestionWord(@Query() query) {
         try {
             return await this.viTayService.wordSuggeston(query.word, 'viet');
-            
-        } catch (err) {   
+        } catch (err) {
             throw err;
         }
     }
@@ -57,8 +53,7 @@ export class VietTayController {
     async taySuggestionWord(@Query() query) {
         try {
             return await this.viTayService.wordSuggeston(query.word, 'tay');
-            
-        } catch (err) {   
+        } catch (err) {
             throw err;
         }
     }
@@ -66,8 +61,8 @@ export class VietTayController {
     @Get('viet')
     async translateVietToTay(@Query() query) {
         try {
-            return await this.viTayService.translate(query.word, 'viet');         
-        } catch (err) {     
+            return await this.viTayService.translate(query.word, 'viet');
+        } catch (err) {
             throw err;
         }
     }
@@ -75,8 +70,8 @@ export class VietTayController {
     @Get('tay')
     async translateTayToViet(@Query() query) {
         try {
-            return await this.viTayService.translate(query.word, 'tay');         
-        } catch (err) {     
+            return await this.viTayService.translate(query.word, 'tay');
+        } catch (err) {
             throw err;
         }
     }

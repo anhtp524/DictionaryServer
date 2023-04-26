@@ -9,35 +9,37 @@ import { Tay } from '../Tay/tay.schema';
 
 @Injectable()
 export class userWordRepository extends Repository<UserWordDocument> {
-    constructor(@InjectModel(UserWord.name) private userWordModel: Model<UserWordDocument>) {
+    constructor(
+        @InjectModel(UserWord.name)
+        private userWordModel: Model<UserWordDocument>,
+    ) {
         super(userWordModel);
-    }
-
-    async getModel(){
-        return this.userWordModel;
     }
 
     async getUserWord(userId: string) {
         const userWords = await this.userWordModel
-            .find({ 'idUser': userId })
+            .find({ idUser: userId })
             .lean()
             .populate({
-                path: "idWord",
+                path: 'idWord',
                 populate: [
                     {
-                    path: 'idVi',
-                    }, {
+                        path: 'idVi',
+                    },
+                    {
                         path: 'idTay',
-                    }
-                ],  
-            })
+                    },
+                ],
+            });
         const arr = [];
         userWords.filter((userWord) => {
             arr.push({
                 viet: ((userWord.idWord as unknown as Viet_Tay).idVi as unknown as Viet).word,
                 tay: ((userWord.idWord as unknown as Viet_Tay).idTay as unknown as Tay).word,
-            })
-        })
+                description: ((userWord.idWord as unknown as Viet_Tay).idTay as unknown as Tay).description,
+                level: userWord.level,
+            });
+        });
         return arr;
     }
 }

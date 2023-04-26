@@ -6,13 +6,8 @@ import { SequenceRepository } from './sequence.repository';
 import { Sequence, sequenceSchema } from './sequence.schema';
 import { SequenceService } from './sequence.service';
 
-
-
 @Module({
-    imports: [
-        MongooseModule.forFeature([{name: Sequence.name, schema: sequenceSchema}]),
-        CrawlerModule
-    ],
+    imports: [MongooseModule.forFeature([{ name: Sequence.name, schema: sequenceSchema }]), CrawlerModule],
     controllers: [SequenceController],
     providers: [SequenceService, SequenceRepository],
 })

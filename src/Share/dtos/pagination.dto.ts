@@ -1,15 +1,15 @@
-import { IsNumber, IsOptional, IsString } from "class-validator"
+import { IsNumber, IsObject, IsOptional } from 'class-validator';
 
-export class PaginationDto{
+export class PaginationDto {
     @IsNumber()
     @IsOptional()
-    limit: number
+    limit: number;
 
     @IsNumber()
     @IsOptional()
-    page: number
+    page: number;
 
-    @IsString()
+    @IsObject()
     @IsOptional()
-    search: string
+    search: object;
 }

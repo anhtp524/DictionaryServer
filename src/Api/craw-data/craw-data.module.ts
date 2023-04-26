@@ -6,6 +6,6 @@ import { CrawlerService } from './craw-data.service';
     imports: [NestCrawlerModule],
     controllers: [CrawlerController],
     providers: [CrawlerService],
-    exports: [CrawlerService]
+    exports: [CrawlerService],
 })
 export class CrawlerModule {}

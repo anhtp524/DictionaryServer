@@ -7,10 +7,10 @@ export type viTayDocument = Viet_Tay & Document;
 
 @Schema()
 export class Viet_Tay {
-    @Prop({type: mongoose.Schema.Types.ObjectId, ref: Viet.name})
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Viet.name })
     idVi: Types.ObjectId;
 
-    @Prop({type: mongoose.Schema.Types.ObjectId, ref: Tay.name})
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Tay.name })
     idTay: Types.ObjectId;
 }
 

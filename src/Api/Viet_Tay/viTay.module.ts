@@ -10,9 +10,15 @@ import { Viet_Tay, viTaySchema } from './viTay.schema';
 import { viTayService } from './viTay.service';
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: Viet_Tay.name, schema: viTaySchema }]),ConfigModule ,VietModule, TayModule, ElasticSearchModule],
+    imports: [
+        MongooseModule.forFeature([{ name: Viet_Tay.name, schema: viTaySchema }]),
+        ConfigModule,
+        VietModule,
+        TayModule,
+        ElasticSearchModule,
+    ],
     controllers: [VietTayController],
     providers: [viTayService, viTayRepository],
-    exports:[viTayRepository]
+    exports: [viTayRepository],
 })
 export class VietTayModule {}

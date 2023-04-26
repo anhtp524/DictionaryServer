@@ -25,27 +25,27 @@ export class viTayRepository extends Repository<viTayDocument> {
                     .populate({
                         path: 'idTay',
                     })
-                    .exec(); 
+                    .exec();
                 const word = tayWords.filter((tayWord) => {
-                    return tayWord.idVi
-                }); 
-                return word;              
+                    return tayWord.idVi;
+                });
+                return word;
             }
             const vietWords = await this.viTayModel
-                    .find()
-                    .lean()
-                    .populate({
-                        path: 'idTay',
-                        match: { word: wordSearch },
-                    })
-                    .populate({
-                        path: 'idVi',
-                    })
-                    .exec(); 
-                const word = vietWords.filter((vietWord) => {
-                    return vietWord.idTay
-                }); 
-            return word; 
+                .find()
+                .lean()
+                .populate({
+                    path: 'idTay',
+                    match: { word: wordSearch },
+                })
+                .populate({
+                    path: 'idVi',
+                })
+                .exec();
+            const word = vietWords.filter((vietWord) => {
+                return vietWord.idTay;
+            });
+            return word;
         } catch (err) {
             throw err;
         }
@@ -53,15 +53,15 @@ export class viTayRepository extends Repository<viTayDocument> {
 
     async getAllVietTay() {
         return await this.viTayModel
-                .find()
-                .lean()
-                .populate({
-                    path: 'idVi',
-                })
-                .populate({
-                    path: 'idTay',
-                })
-                .exec(); 
+            .find()
+            .lean()
+            .populate({
+                path: 'idVi',
+            })
+            .populate({
+                path: 'idTay',
+            })
+            .exec();
     }
 
     async getTaytoViet(wordSearch: string) {

@@ -11,28 +11,33 @@ import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly userService: UsersService,
+    constructor(
+        private readonly userService: UsersService,
         private readonly userRepository: UserRepository,
         private readonly jwtService: jwtService,
         private readonly cacheService: CacheService,
-        private readonly configService: ConfigService) { }
+        private readonly configService: ConfigService,
+    ) {}
 
     async register(user: any): Promise<User> {
         return this.userService.createUser(user);
     }
 
     async login(info: any) {
-        const user = await this.userRepository.getOneByCondition({ 'username': info.username });  
-        if (!user || !await comparePassword(info.password, user.password)) {
-            throw new HttpException(ERROR.USERNAME_OR_PASSWORD_INCORRECT.message, ERROR.USERNAME_OR_PASSWORD_INCORRECT.statusCode)
+        const user = await this.userRepository.getOneByCondition({ username: info.username });
+        if (!user || !(await comparePassword(info.password, user.password))) {
+            throw new HttpException(
+                ERROR.USERNAME_OR_PASSWORD_INCORRECT.message,
+                ERROR.USERNAME_OR_PASSWORD_INCORRECT.statusCode,
+            );
         }
         if (user.status !== Status.active) {
-            throw new HttpException(ERROR.USER_NOT_FOUND.message, ERROR.USER_NOT_FOUND.statusCode)
+            throw new HttpException(ERROR.USER_NOT_FOUND.message, ERROR.USER_NOT_FOUND.statusCode);
         }
-        const refreshToken = await this.cacheService.get(`users:${user.id}:refreshToken`)
-        const accessToken_old = await this.cacheService.get(`users:${user.id}:accessToken`)
+        const refreshToken = await this.cacheService.get(`users:${user.id}:refreshToken`);
+        const accessToken_old = await this.cacheService.get(`users:${user.id}:accessToken`);
         if (accessToken_old) {
-                this.cacheService.del(`users:${user.id}:accessToken`);
+            this.cacheService.del(`users:${user.id}:accessToken`);
         }
         const accessToken = await this.jwtService.signToken(
             { id: user.id },
@@ -47,8 +52,8 @@ export class AuthService {
                 this.configService.get<number>('CACHE_ACCESS_TOKEN_TTL'),
             );
             return {
-                'accessToken': accessToken,
-                'refreshToken': refreshToken,
+                accessToken: accessToken,
+                refreshToken: refreshToken,
             };
         }
 
@@ -69,17 +74,14 @@ export class AuthService {
             this.configService.get<number>('CACHE_ACCESS_TOKEN_TTL'),
         );
         return {
-            'accessToken': accessToken,
-            'refreshToken': newRefreshToken,
+            accessToken: accessToken,
+            refreshToken: newRefreshToken,
         };
-        
     }
 
     async logout(userId: string) {
         await this.cacheService.del(`users:${userId}:accessToken`);
         await this.cacheService.del(`users:${userId}:refreshToken`);
-        return new HttpException('You are logging out' , 200)
+        return new HttpException('You are logging out', 200);
     }
-
-    
 }

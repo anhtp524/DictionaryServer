@@ -6,7 +6,7 @@ export type VietDocument = Viet & Document;
 @Schema()
 export class Viet {
     @Prop()
-    word: string
+    word: string;
 }
 
 export const VietSchema = SchemaFactory.createForClass(Viet);

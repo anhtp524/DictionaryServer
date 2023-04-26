@@ -7,18 +7,17 @@ export class SequenceController {
 
     @Get('add')
     addData() {
-        this.sequenceService.create()
-        return "test"
+        this.sequenceService.create();
+        return 'test';
     }
 
     @Get('')
     getTaySequece() {
-        return this.sequenceService.getTaySequence()
+        return this.sequenceService.getTaySequence();
     }
 
     @Patch('/:id')
-    updateVietSequence(@Param('id') id: string, @Body() {stringViet}: {stringViet: string}) {
-        return this.sequenceService.updateVietSequence(id, stringViet)
+    updateVietSequence(@Param('id') id: string, @Body() { stringViet }: { stringViet: string }) {
+        return this.sequenceService.updateVietSequence(id, stringViet);
     }
-
 }

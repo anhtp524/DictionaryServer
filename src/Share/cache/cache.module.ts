@@ -11,11 +11,11 @@ import * as redisStore from 'cache-manager-ioredis';
             inject: [ConfigService],
             useFactory: async (configService: ConfigService) => {
                 return {
-                    store: redisStore ,
+                    store: redisStore,
                     host: 'localhost',
                     port: configService.get<number>('CACHE_PORT'),
-                }
-            }
+                };
+            },
         }),
     ],
     providers: [CacheService],

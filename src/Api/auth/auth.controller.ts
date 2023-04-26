@@ -8,34 +8,33 @@ import { LoginDto, RegisterDto } from './dto/auth.dto';
 
 @Controller('')
 export class AuthController {
-    constructor(private readonly authService: AuthService){}
+    constructor(private readonly authService: AuthService) {}
 
     @Post('register')
-    async register(@Body() user: RegisterDto){
-        try{
+    async register(@Body() user: RegisterDto) {
+        try {
             return await this.authService.register(user);
-        }catch(err){
+        } catch (err) {
             return err;
         }
     }
 
     @Post('login')
-    async login(@Body() info: LoginDto){
-        try{
+    async login(@Body() info: LoginDto) {
+        try {
             return await this.authService.login(info);
-        }catch(err){
+        } catch (err) {
             return err;
         }
     }
 
-
     @Post('logout')
     @Roles(Role.user)
-    @UseGuards(RolesGuard) 
-    async logout(@Request() req){
-        try{
+    @UseGuards(RolesGuard)
+    async logout(@Request() req) {
+        try {
             return await this.authService.logout(req.userId);
-        }catch(err){
+        } catch (err) {
             return err;
         }
     }

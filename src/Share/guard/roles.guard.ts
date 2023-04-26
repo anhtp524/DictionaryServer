@@ -16,10 +16,7 @@ export class RolesGuard implements CanActivate {
             const userId = await this.JwtService.verifyToken(token);
             const userRole = await this.cacheService.get(`users:${userId.id}:accessToken`);
             if (!userRole) {
-                throw new HttpException(
-                    `You need to login`,
-                    HttpStatus.NOT_ACCEPTABLE,
-                );
+                throw new HttpException(`You need to login`, HttpStatus.NOT_ACCEPTABLE);
             }
             request.userId = userId.id;
             request.userRole = userRole;

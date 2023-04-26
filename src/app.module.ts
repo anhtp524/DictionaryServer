@@ -9,10 +9,14 @@ import { UsersModule } from './Api/users/users.module';
 import { AuthModule } from './Api/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserWordModule } from './Api/user-word/user-word.module';
+import { CoursesModule } from './Api/courses/courses.module';
+import { OrderModule } from './Api/order/order.module';
 
 @Module({
     imports: [
-        MongooseModule.forRoot('mongodb+srv://hieu:EBeysKEvqLfQ3W5a@hieu.iz4kxp7.mongodb.net/test?retryWrites=true&w=majority'),
+        MongooseModule.forRoot(
+            'mongodb+srv://hieu:EBeysKEvqLfQ3W5a@hieu.iz4kxp7.mongodb.net/test?retryWrites=true&w=majority',
+        ),
         ConfigModule.forRoot({
             isGlobal: true,
             envFilePath: '.env',
@@ -25,6 +29,8 @@ import { UserWordModule } from './Api/user-word/user-word.module';
         UsersModule,
         AuthModule,
         UserWordModule,
+        CoursesModule,
+        OrderModule,
     ],
     providers: [],
     controllers: [],

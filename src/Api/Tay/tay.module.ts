@@ -4,10 +4,9 @@ import { TayRepository } from './tay.repository';
 import { Tay, TaySchema } from './tay.schema';
 import { TayService } from './tay.service';
 
-
 @Module({
-    imports: [MongooseModule.forFeature([{name: Tay.name, schema: TaySchema}])],
+    imports: [MongooseModule.forFeature([{ name: Tay.name, schema: TaySchema }])],
     providers: [TayService, TayRepository],
-    exports: [TayRepository]
+    exports: [TayRepository],
 })
 export class TayModule {}

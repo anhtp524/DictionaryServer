@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { createTransport } from 'nodemailer';
 import * as Mail from 'nodemailer/lib/mailer';
+import { validate } from 'deep-email-validator';
 
 @Injectable()
 export class MailerService {
@@ -20,10 +21,12 @@ export class MailerService {
 
     async sendMail(email: string) {
         try {
+            const validateEmail = await validate(email);
+            console.log(validateEmail);
+            if (validateEmail.valid === false) {
+                throw new HttpException(`Can not send message to ${email}`, 400);
+            }
             const otp = Math.floor(1000 + Math.random() * 9000).toString();
-            console.log(otp);  
-            console.log(process.env.EMAIL_USER);
-               
             await this.nodemailerTransport.sendMail({
                 from: '"MinhHieu " <mhieu3101@gmail.com>',
                 to: email,

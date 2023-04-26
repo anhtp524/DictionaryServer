@@ -1,4 +1,3 @@
-
 import { Repository } from 'src/Share/Database/repository';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -12,8 +11,6 @@ export class UserRepository extends Repository<UserDocument> {
     }
 
     checkUserExist(username: string, email: string): Promise<User> {
-        console.log('22');
-        
-        return this.userModel.findOne({'username': username, 'email': email}).exec();
+        return this.userModel.findOne({ $or: [{ username: username }, { email: email }] }).exec();
     }
 }

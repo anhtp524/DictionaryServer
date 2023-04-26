@@ -1,32 +1,32 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty , IsEmail , Length, IsString, MinLength, IsDateString } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsEmail, Length, IsString, MinLength, IsDateString } from 'class-validator';
 
 export class VerifyDto {
     @ApiProperty()
     @IsNotEmpty()
     @IsString()
     @Length(4)
-    otp: string
+    otp: string;
 
     @ApiProperty()
     @IsNotEmpty()
     @IsEmail()
-    email: string
+    email: string;
 }
 
 export class SendOTPDto {
     @ApiProperty()
     @IsNotEmpty()
     @IsEmail()
-    email: string
+    email: string;
 }
 
 export class forgotPasswordDTO {
     @ApiProperty()
     @IsNotEmpty()
     @IsEmail()
-    email: string
-    
+    email: string;
+
     @ApiProperty()
     @IsString()
     @IsNotEmpty()
@@ -37,7 +37,7 @@ export class forgotPasswordDTO {
     @IsNotEmpty()
     @IsString()
     @Length(4)
-    otp: string
+    otp: string;
 }
 
 export class changePasswordDTO {

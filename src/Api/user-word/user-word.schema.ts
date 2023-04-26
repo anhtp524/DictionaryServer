@@ -7,11 +7,14 @@ export type UserWordDocument = UserWord & Document;
 
 @Schema()
 export class UserWord {
-    @Prop({type: mongoose.Schema.Types.ObjectId, ref: User.name})
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name })
     idUser: Types.ObjectId;
 
-    @Prop({type: mongoose.Schema.Types.ObjectId, ref: Viet_Tay.name})
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Viet_Tay.name })
     idWord: Types.ObjectId;
+
+    @Prop()
+    level: string;
 }
 
 export const userWordSchema = SchemaFactory.createForClass(UserWord);

@@ -8,23 +8,22 @@ export class CrawlerService {
 
     // scraping the specific page
     public async scrape(): Promise<string[]> {
-
         interface ExampleCom {
             info: string;
         }
         const arrUrl = [
-            "https://vov4.vov.vn/taynung/phan-tin-va-bai-fiet-tin-tuc-su-kien/pi-noong-du-ban-con-pao-chuc-dong-may-chang-nam-kem-379253.vov4",
-            "https://vov4.vov.vn/taynung/phan-tin-va-bai-fiet-tin-tuc-su-kien/tao-fu-chao-cao-bang-401900.vov4",
+            'https://vov4.vov.vn/taynung/phan-tin-va-bai-fiet-tin-tuc-su-kien/pi-noong-du-ban-con-pao-chuc-dong-may-chang-nam-kem-379253.vov4',
+            'https://vov4.vov.vn/taynung/phan-tin-va-bai-fiet-tin-tuc-su-kien/tao-fu-chao-cao-bang-401900.vov4',
             'https://vov4.vov.vn/taynung/phan-tin-va-bai-fiet-tin-tuc-su-kien/pi-noong-dan-toc-noi-can-du-binh-lieu-quang-ninh-long-reng-tang-co-ban-con-mau-401890.vov4',
             'https://vov4.vov.vn/taynung/phan-tin-va-bai-fiet-tin-tuc-su-kien/bai-slay-slu-du-ban-401830.vov4',
             'https://vov4.vov.vn/taynung/phan-tin-va-bai-fiet-tin-tuc-su-kien/can-san-chi-du-tin-phja-cao-ly-357579.vov4',
             'https://vov4.vov.vn/taynung/phan-tin-va-bai-fiet-tin-tuc-su-kien/bung-slung-bac-kan-xay-can-tang-lan-pinh-la-331880.vov4',
             'https://vov4.vov.vn/taynung/phan-tin-va-bai-fiet-tin-tuc-su-kien/xay-can-tang-co-ban-con-mau-du-bung-dan-toc-noi-can-cua-hoen-kon-plong-376641.vov4',
-            'https://vov4.vov.vn/taynung/bai-thinh-chia-pang-choi-va-luat-mau-tim-hieu-chinh-sach-phap-luat/sluong-toi-bai-tin-mai-du-tenh-chia-khai-slinh-le-pi-noong-can-het-pen-ru-401435.vov4'
-        ]
-        let arr_data: string[] = []
+            'https://vov4.vov.vn/taynung/bai-thinh-chia-pang-choi-va-luat-mau-tim-hieu-chinh-sach-phap-luat/sluong-toi-bai-tin-mai-du-tenh-chia-khai-slinh-le-pi-noong-can-het-pen-ru-401435.vov4',
+        ];
+        let arr_data: string[] = [];
 
-        for(let value of arrUrl) {
+        for (const value of arrUrl) {
             const data: ExampleCom = await this.crawler.fetch({
                 target: value,
                 fetch: {
@@ -38,19 +37,17 @@ export class CrawlerService {
             data.info = data.info.replace(/\s+/g, ' ');
             // loại bỏ toàn bộ dấu space (nếu có) ở 2 đầu của xâu
             data.info.trim();
-    
-            data.info = data.info.replace(/\"|“|”|.\//g, '')
-            
-            data.info = data.info.replace(/:/g, '.')
-            
-    
-            const arr_value: string[] = data.info.split('. ')
+
+            data.info = data.info.replace(/\"|“|”|.\//g, '');
+
+            data.info = data.info.replace(/:/g, '.');
+
+            const arr_value: string[] = data.info.split('. ');
             //
-            arr_data = [...arr_data, ...arr_value]
+            arr_data = [...arr_data, ...arr_value];
         }
-        
-        
-        return arr_data
+
+        return arr_data;
 
         // fs.writeFile('data.txt', data.info, function (err) {
         //     if (err) {

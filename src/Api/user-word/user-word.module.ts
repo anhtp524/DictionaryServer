@@ -11,9 +11,16 @@ import { UserWord, userWordSchema } from './user-word.schema';
 import { UserWordService } from './user-word.service';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: UserWord.name, schema: userWordSchema }]) , UsersModule, VietTayModule, jwtModule,cacheModule,ElasticSearchModule],
-  controllers: [UserWordController],
-  providers: [UserWordService, userWordRepository],
-  exports: [UserWordService]
+    imports: [
+        MongooseModule.forFeature([{ name: UserWord.name, schema: userWordSchema }]),
+        UsersModule,
+        VietTayModule,
+        jwtModule,
+        cacheModule,
+        ElasticSearchModule,
+    ],
+    controllers: [UserWordController],
+    providers: [UserWordService, userWordRepository],
+    exports: [UserWordService],
 })
 export class UserWordModule {}
