@@ -19,6 +19,7 @@ export class viTayService {
         private readonly esService: ElasticSearchService,
     ) {}
 
+    // tạo các data Viet-Tay bằng cách lưu trữ id Việt và id Tày tương ứng
     async create() {
         const dataVi = await this.vietRepo.test();
         const dataTay = await this.tayRepo.test();
@@ -44,6 +45,7 @@ export class viTayService {
         });
     }
 
+    // chuyển data trong database mongoDB sang database ES
     async indexESData() {
         try {
             const dataVietTay = await this.viTayRepo.getAllVietTay();
@@ -66,7 +68,10 @@ export class viTayService {
         if (words.length === 0) {
             return word;
         }
-        return words.map((value) => (value.idTay as unknown as Tay).word);
+        if (language === 'tay') {
+            return words.map((value) => value.idVi as unknown as Viet);
+        }
+        return words.map((value) => value.idTay as unknown as Tay);
     }
 
     async translateByElasticSearch(word: string, language: string) {
@@ -131,16 +136,5 @@ export class viTayService {
     //     return {
     //         listSequenceText: result,
     //     };
-    // }
-
-    // backTrackingAlgorithm(arr: any[], l: number, indexArrWord: number, j: number, x: any[], result: any[]) {
-    //     for (const value of arr[j]) {
-    //         x[indexArrWord] = value.idTay.word;
-    //         if (indexArrWord === l - 1) {
-    //             result.push(x.join(' '));
-    //         } else {
-    //             this.backTrackingAlgorithm(arr, l, indexArrWord + 1, j + 1, x, result);
-    //         }
-    //     }
     // }
 }

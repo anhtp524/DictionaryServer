@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { Viet_Tay, viTayDocument } from './viTay.schema';
 import { Viet } from '../Viet/viet.schema';
 import { Tay } from '../Tay/tay.schema';
+import { log } from 'console';
 
 @Injectable()
 export class viTayRepository extends Repository<viTayDocument> {

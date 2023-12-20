@@ -6,14 +6,13 @@ import { ElasticsearchService } from '@nestjs/elasticsearch';
 export class ElasticSearchService {
     constructor(private readonly esService: ElasticsearchService, private readonly configService: ConfigService) {}
 
+    // tạo index lưu trữ dữ liêu trong ES
     public async createIndex() {
         const index = this.configService.get('ELASTICSEARCH_INDEX');
         const checkIndex = await this.esService.indices.exists({ index });
-        console.log(`checkIndex:${checkIndex}`);
-        // tslint:disable-next-line:early-exit
         if (!checkIndex) {
             this.esService.indices.create({
-                index,
+                index: 'dictionary',
                 body: {
                     mappings: {
                         properties: {
@@ -78,9 +77,10 @@ export class ElasticSearchService {
         }
     }
 
+    // tạo data trong index ES
     async indexVietTay(viet_tay: any) {
         return await this.esService.index({
-            index: this.configService.get('ELASTICSEARCH_INDEX')!,
+            index: 'dictionary',
             body: viet_tay,
         });
     }
